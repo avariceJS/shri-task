@@ -68,9 +68,12 @@ export function FileUploaderWidget() {
                                     error={error}
                                 />
                             </div>
-                            <p className={styles.title}>
-                                {isParsed ? "готово." : "файл загружен!"}
-                            </p>
+
+                            {!error && (
+                                <p className={styles.title}>
+                                    {isParsed ? "готово." : "файл загружен!"}
+                                </p>
+                            )}
                             {error && (
                                 <p className={styles.errorText}>{error}</p>
                             )}

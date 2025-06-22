@@ -1,20 +1,21 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { StatsModal } from "../../entities/StatsModal/StatsModal";
 import { useStore } from "../../shared/store/useStore";
-import type { UploadHistoryEntry } from "../../shared/type/types";
 import { HistoryEntry } from "../../entities/HistoryEntry/HistoryEntry";
 import { Button } from "../../shared/components/Button";
 import styles from "./index.module.css";
+
 export function UploadHistoryWidget() {
     const {
         uploadHistory,
         removeFromHistory,
         clearHistory,
         loadHistoryFromStorage,
+        selectedEntry,
+        setSelectedEntry,
+        visibleCount,
+        setVisibleCount,
     } = useStore();
-    const [selectedEntry, setSelectedEntry] =
-        useState<UploadHistoryEntry | null>(null);
-    const [visibleCount, setVisibleCount] = useState(4);
 
     useEffect(() => {
         loadHistoryFromStorage();
@@ -25,7 +26,6 @@ export function UploadHistoryWidget() {
     }
 
     const visibleHistory = uploadHistory.slice(0, visibleCount);
-
     const hasMore = visibleCount < uploadHistory.length;
 
     return (
@@ -49,7 +49,7 @@ export function UploadHistoryWidget() {
                 {hasMore && (
                     <Button
                         variant="active"
-                        onClick={() => setVisibleCount((count) => count + 4)}
+                        onClick={() => setVisibleCount(visibleCount + 4)}
                     >
                         Сгенерировать больше
                     </Button>

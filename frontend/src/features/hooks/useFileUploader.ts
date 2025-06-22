@@ -1,7 +1,6 @@
-import { useState } from "react";
 import { parseStatsStream } from "../../shared/utils/parseStatsStream";
-import { useStore } from "../../shared/store/useStore";
 import { isValidStats } from "../../shared/utils/validateStats";
+import { useStore } from "../../shared/store/useStore";
 import type { EntryType } from "../../shared/type/types";
 
 const API_URL = "http://localhost:3000/aggregate?rows=100";
@@ -16,20 +15,15 @@ export function useFileUploader() {
         setError,
         stats,
         setStats,
+        isParsing,
+        isParsed,
+        setIsParsing,
+        setIsParsed,
+        dragActive,
+        setDragActive,
         addToHistory,
+        clearFile,
     } = useStore();
-
-    const [dragActive, setDragActive] = useState(false);
-    const [isParsing, setIsParsing] = useState(false);
-    const [isParsed, setIsParsed] = useState(false);
-
-    const clearFile = () => {
-        setFile(null);
-        setStats([]);
-        setError(null);
-        setIsParsing(false);
-        setIsParsed(false);
-    };
 
     const handleFileSelected = (selectedFile: File | null) => {
         clearFile();
@@ -42,7 +36,6 @@ export function useFileUploader() {
         }
 
         setFile(selectedFile);
-        setError(null);
     };
 
     const handleSendFile = async () => {
@@ -80,49 +73,36 @@ export function useFileUploader() {
                 }
             );
 
-            if (parsedStats.length > 0) {
-                const latestValid = [...parsedStats]
-                    .reverse()
-                    .find(isValidStats);
+            const latestValid = parsedStats
+                .slice()
+                .reverse()
+                .find(isValidStats);
 
-                const entry: EntryType = {
-                    id: Date.now().toString(),
-                    createdAt: new Date().toISOString(),
-                    filename: file.name,
-                    status:
-                        latestValid && !hadParsingError ? "success" : "error",
-                    stats: latestValid ?? parsedStats[0],
-                };
+            const entry: EntryType = {
+                id: Date.now().toString(),
+                createdAt: new Date().toISOString(),
+                filename: file.name,
+                status: latestValid && !hadParsingError ? "success" : "error",
+                stats: latestValid ?? parsedStats[0] ?? {
+                    total_spend_galactic: 0,
+                    rows_affected: 0,
+                    less_spent_at: 0,
+                    big_spent_at: 0,
+                    less_spent_value: 0,
+                    big_spent_value: 0,
+                    average_spend_galactic: 0,
+                    big_spent_civ: "",
+                    less_spent_civ: "",
+                },
+            };
 
-                addToHistory(entry);
+            addToHistory(entry);
 
-                if (!latestValid) {
-                    setError("упс, не то...");
-                    setIsParsed(false);
-                } else {
-                    setIsParsed(true);
-                }
-            } else {
+            if (!latestValid) {
                 setError("упс, не то...");
                 setIsParsed(false);
-
-                addToHistory({
-                    id: Date.now().toString(),
-                    createdAt: new Date().toISOString(),
-                    filename: file.name,
-                    status: "error",
-                    stats: {
-                        total_spend_galactic: 0,
-                        rows_affected: 0,
-                        less_spent_at: 0,
-                        big_spent_at: 0,
-                        less_spent_value: 0,
-                        big_spent_value: 0,
-                        average_spend_galactic: 0,
-                        big_spent_civ: "",
-                        less_spent_civ: "",
-                    },
-                });
+            } else {
+                setIsParsed(true);
             }
         } catch (err: unknown) {
             setError(err instanceof Error ? err.message : "Неизвестная ошибка");

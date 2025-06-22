@@ -1,21 +1,23 @@
 import { useStore } from "../../../shared/store/useStore";
 import { fetchReport } from "../../../shared/api/fetchReport";
-import { useState } from "react";
 
 export function useGenerateReport() {
-    const { setLoading, setError } = useStore();
-
-    const [isGenerating, setIsGenerating] = useState(false);
-    const [isGenerated, setIsGenerated] = useState(false);
-    const [error, setLocalError] = useState<string | null>(null);
-    const [generatedFile, setGeneratedFile] = useState<File | null>(null);
+    const {
+        setLoading,
+        setError,
+        isGenerating,
+        isGenerated,
+        generatedFile,
+        setIsGenerating,
+        setIsGenerated,
+        setGeneratedFile,
+    } = useStore();
 
     const handleGenerate = async () => {
         setLoading(true);
         setError(null);
         setIsGenerating(true);
         setIsGenerated(false);
-        setLocalError(null);
         setGeneratedFile(null);
 
         try {
@@ -37,9 +39,9 @@ export function useGenerateReport() {
 
             setIsGenerated(true);
         } catch (err: unknown) {
-            const message = err instanceof Error ? err.message : "Неизвестная ошибка";
+            const message =
+                err instanceof Error ? err.message : "Неизвестная ошибка";
             setError(message);
-            setLocalError("упс, не то...");
         } finally {
             setLoading(false);
             setIsGenerating(false);
@@ -50,7 +52,6 @@ export function useGenerateReport() {
         handleGenerate,
         isGenerating,
         isGenerated,
-        error: error || undefined,
         generatedFile,
     };
 }
