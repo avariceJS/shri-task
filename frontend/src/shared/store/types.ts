@@ -30,6 +30,7 @@ export type State = {
     setIsGenerating: (val: boolean) => void;
     setIsGenerated: (val: boolean) => void;
     setGeneratedFile: (file: File | null) => void;
+    resetReportState: () => void;
 
     addToHistory: (entry: UploadHistoryEntry) => void;
     removeFromHistory: (id: string) => void;

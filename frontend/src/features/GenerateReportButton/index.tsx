@@ -1,46 +1,30 @@
-import { ButtonUpload } from "../../shared/components/ButtonUpload";
-import Spinner from "../../shared/components/Spinner";
-import { useGenerateReport } from "./hooks/useGenerateReport";
-import { FileInfo } from "../../entities/FileInfo/FileInfo";
-import styles from "./index.module.css";
+import { useGenerateReport } from './hooks/useGenerateReport';
+import styles from './styles/index.module.css';
+import { GenerateAction } from './ui/GenerateAction';
+import { getButtonVariant, getStatusMessage } from './ui/helpers';
+import { ReportResult } from './ui/ReportResult';
+import { useStore } from '../../shared/store/useStore';
 
 export function GenerateReportButton() {
-    const { handleGenerate, isGenerating, isGenerated, error, generatedFile } =
-        useGenerateReport();
+    const { handleGenerate, isGenerating, isGenerated, error, generatedFile } = useGenerateReport();
 
-    let variant: "active" | "parsing" | "done" | "error" = "active";
-    if (isGenerating) variant = "parsing";
-    else if (error) variant = "error";
-    else if (isGenerated) variant = "done";
+    const resetReportState = useStore((state) => state.resetReportState);
 
-    let message = "";
-    if (isGenerating) message = "идёт процесс генерации...";
-    else if (isGenerated) message = "файл сгенерирован!";
-    else if (error) message = "упс, не то...";
+    const variant = getButtonVariant({ isGenerating, isGenerated, error });
+    const message = getStatusMessage({ isGenerating, isGenerated, error });
 
     return (
         <div className={styles.container}>
             {isGenerated && generatedFile ? (
-                <>
-                    <FileInfo
-                        onClear={() => window.location.reload()}
-                        loading={false}
-                        isParsed={true}
-                        children="Done!"
-                    />
-                    <p>{message}</p>
-                </>
+                <ReportResult onClear={resetReportState} message={message} />
             ) : (
-                <>
-                    <ButtonUpload
-                        variant={variant}
-                        onClick={handleGenerate}
-                        disabled={isGenerating}
-                    >
-                        {isGenerating ? <Spinner /> : "Сгенерировать файл"}
-                    </ButtonUpload>
-                    {message && <p>{message}</p>}
-                </>
+                <GenerateAction
+                    onClick={handleGenerate}
+                    disabled={isGenerating}
+                    variant={variant}
+                    message={message}
+                    isLoading={isGenerating}
+                />
             )}
         </div>
     );

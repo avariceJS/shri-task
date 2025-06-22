@@ -1,9 +1,9 @@
-import { useEffect } from "react";
-import { StatsModal } from "../../entities/StatsModal/StatsModal";
-import { useStore } from "../../shared/store/useStore";
-import { HistoryEntry } from "../../entities/HistoryEntry/HistoryEntry";
-import { Button } from "../../shared/components/Button";
-import styles from "./index.module.css";
+import { useEffect } from 'react';
+import { StatsModal } from '../../entities/StatsModal';
+import { useStore } from '../../shared/store/useStore';
+import { HistoryEntry } from '../../entities/HistoryEntry';
+import { Button } from '../../shared/components/Button';
+import styles from './index.module.css';
 
 export function UploadHistoryWidget() {
     const {
@@ -47,20 +47,14 @@ export function UploadHistoryWidget() {
                 </Button>
 
                 {hasMore && (
-                    <Button
-                        variant="active"
-                        onClick={() => setVisibleCount(visibleCount + 4)}
-                    >
+                    <Button variant="active" onClick={() => setVisibleCount(visibleCount + 4)}>
                         Сгенерировать больше
                     </Button>
                 )}
             </div>
 
             {selectedEntry && (
-                <StatsModal
-                    entry={selectedEntry}
-                    onClose={() => setSelectedEntry(null)}
-                />
+                <StatsModal entry={selectedEntry} onClose={() => setSelectedEntry(null)} />
             )}
         </>
     );

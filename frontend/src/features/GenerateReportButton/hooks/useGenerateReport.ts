@@ -1,8 +1,9 @@
-import { useStore } from "../../../shared/store/useStore";
-import { fetchReport } from "../../../shared/api/fetchReport";
+import { useStore } from '../../../shared/store/useStore';
+import { fetchReport } from '../../../shared/api/fetchReport';
 
 export function useGenerateReport() {
     const {
+        error,
         setLoading,
         setError,
         isGenerating,
@@ -22,25 +23,24 @@ export function useGenerateReport() {
 
         try {
             const blob = await fetchReport({
-                size: "0.01",
-                withErrors: "off",
-                maxSpend: "1000",
+                size: '0.01',
+                withErrors: 'off',
+                maxSpend: '1000',
             });
 
-            const file = new File([blob], "report.csv", { type: "text/csv" });
+            const file = new File([blob], 'report.csv', { type: 'text/csv' });
             setGeneratedFile(file);
 
             const url = URL.createObjectURL(blob);
-            const link = document.createElement("a");
+            const link = document.createElement('a');
             link.href = url;
-            link.download = "report.csv";
+            link.download = 'report.csv';
             link.click();
             URL.revokeObjectURL(url);
 
             setIsGenerated(true);
         } catch (err: unknown) {
-            const message =
-                err instanceof Error ? err.message : "Неизвестная ошибка";
+            const message = err instanceof Error ? err.message : 'Неизвестная ошибка';
             setError(message);
         } finally {
             setLoading(false);
@@ -53,5 +53,6 @@ export function useGenerateReport() {
         isGenerating,
         isGenerated,
         generatedFile,
+        error,
     };
 }

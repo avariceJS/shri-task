@@ -1,12 +1,12 @@
-import { useRef } from "react";
-import { FileInfo } from "../../entities/FileInfo/FileInfo";
-import { StatsSummary } from "../../entities/StatsSummary/StatsSummary";
-import { useFileUploader } from "../../features/hooks/useFileUploader";
-import { FileDropZone } from "../../features/FileDropZone";
-import { ButtonUpload } from "../../shared/components/ButtonUpload";
-import { Button } from "../../shared/components/Button";
-import Spinner from "../../shared/components/Spinner";
-import styles from "./index.module.css";
+import { useRef } from 'react';
+import { FileInfo } from '../../entities/FileInfo/FileInfo';
+import { StatsSummary } from '../../entities/StatsSummary';
+import { FileDropZone } from '../../features/FileDropZone';
+import { ButtonUpload } from '../../shared/components/ButtonUpload';
+import { Button } from '../../shared/components/Button';
+import Spinner from '../../shared/components/Spinner';
+import styles from './index.module.css';
+import { useFileUploader } from '../../features/hooks/useFileUploader';
 
 export function FileUploaderWidget() {
     const {
@@ -33,10 +33,7 @@ export function FileUploaderWidget() {
 
     return (
         <div className={styles.container}>
-            <h2>
-                Загрузите csv файл и получите полную информацию о нём за
-                сверхнизкое время
-            </h2>
+            <h2>Загрузите csv файл и получите полную информацию о нём за сверхнизкое время</h2>
             <FileDropZone
                 dragActive={dragActive}
                 onDragOver={handleDragOver}
@@ -45,10 +42,8 @@ export function FileUploaderWidget() {
             >
                 <div
                     className={`${styles.dropZone} ${
-                        file || isParsing || isParsed
-                            ? styles.dropZoneActive
-                            : ""
-                    } ${dragActive ? styles.dragActive : ""}`}
+                        file || isParsing || isParsed ? styles.dropZoneActive : ''
+                    } ${dragActive ? styles.dragActive : ''}`}
                 >
                     {loading && isParsing ? (
                         <>
@@ -71,12 +66,10 @@ export function FileUploaderWidget() {
 
                             {!error && (
                                 <p className={styles.title}>
-                                    {isParsed ? "готово." : "файл загружен!"}
+                                    {isParsed ? 'готово.' : 'файл загружен!'}
                                 </p>
                             )}
-                            {error && (
-                                <p className={styles.errorText}>{error}</p>
-                            )}
+                            {error && <p className={styles.errorText}>{error}</p>}
                         </>
                     ) : (
                         <>
@@ -98,20 +91,18 @@ export function FileUploaderWidget() {
                 ref={fileInputRef}
                 type="file"
                 accept=".csv"
-                onChange={(e) =>
-                    handleFileSelected(e.target.files?.[0] ?? null)
-                }
+                onChange={(e) => handleFileSelected(e.target.files?.[0] ?? null)}
                 disabled={loading}
             />
 
             {!isParsed && !isParsing && !error && (
                 <div className={styles.buttonContainer}>
                     <Button
-                        variant={file ? "active" : "unactive"}
+                        variant={file ? 'active' : 'unactive'}
                         onClick={handleSendFile}
                         disabled={!file || loading}
                     >
-                        {loading ? <Spinner /> : "Отправить"}
+                        {loading ? <Spinner /> : 'Отправить'}
                     </Button>
                 </div>
             )}

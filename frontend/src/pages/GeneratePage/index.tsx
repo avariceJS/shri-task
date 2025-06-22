@@ -1,5 +1,5 @@
-import styles from './index.module.css'
-import { GenerateReportButton } from "../../features/GenerateReportButton";
+import styles from './styles/index.module.css';
+import { GenerateReportButton } from '../../features/GenerateReportButton';
 
 export default function GeneratePage() {
     return (

@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./ButtonUpload.module.css";
 
 type ButtonProps = {
-    variant: "active" | "process" | "parsing" | "done" | "error";
+    variant: "active" | "process" | "parsing" | "done" | "error" | 'active2';
     children: React.ReactNode;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 

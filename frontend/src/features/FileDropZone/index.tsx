@@ -1,5 +1,6 @@
-import type { FC } from "react";
-import type { FileDropZoneProps } from "./interface";
+import type { FC } from 'react';
+import type { FileDropZoneProps } from './types';
+import styles from './styles/index.module.css';
 
 export const FileDropZone: FC<FileDropZoneProps> = ({
     onDragOver,
@@ -11,9 +12,7 @@ export const FileDropZone: FC<FileDropZoneProps> = ({
         onDragOver={onDragOver}
         onDragLeave={onDragLeave}
         onDrop={onDrop}
-        style={{
-            width: "100%",
-        }}
+        className={styles.container}
     >
         {children}
     </div>

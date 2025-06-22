@@ -1,4 +1,4 @@
-import { FileUploaderWidget } from "../../widgets/FileUploaderWidget";
+import { FileUploaderWidget } from '../../widgets/FileUploaderWidget';
 
 export default function HomePage() {
     return <FileUploaderWidget />;

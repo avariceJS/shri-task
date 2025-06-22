@@ -1,12 +1,12 @@
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import HistoryPage from "./pages/HistoryPage";
-import GeneratePage from "./pages/GeneratePage";
-import HomePage from "./pages/HomePage";
-import Header from "./shared/components/Header";
-import './main.css'
-createRoot(document.getElementById("root")!).render(
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import HistoryPage from './pages/HistoryPage';
+import GeneratePage from './pages/GeneratePage';
+import HomePage from './pages/HomePage';
+import Header from './shared/components/Header';
+import './main.css';
+createRoot(document.getElementById('root')!).render(
     <StrictMode>
         <BrowserRouter>
             <Header />
@@ -16,5 +16,5 @@ createRoot(document.getElementById("root")!).render(
                 <Route path="/history" element={<HistoryPage />} />
             </Routes>
         </BrowserRouter>
-    </StrictMode>
+    </StrictMode>,
 );

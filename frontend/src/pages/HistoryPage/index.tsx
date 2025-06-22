@@ -1,4 +1,4 @@
-import { UploadHistoryWidget } from "../../widgets/UploadHistoryWidget";
+import { UploadHistoryWidget } from '../../widgets/UploadHistoryWidget';
 
 export default function HistoryPage() {
     return (
