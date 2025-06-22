@@ -4,7 +4,6 @@ import { useStore } from "../../shared/store/useStore";
 import { isValidStats } from "../../shared/utils/validateStats";
 import type { EntryType } from "../../shared/type/types";
 
-
 const API_URL = "http://localhost:3000/aggregate?rows=100";
 
 export function useFileUploader() {
@@ -21,19 +20,24 @@ export function useFileUploader() {
     } = useStore();
 
     const [dragActive, setDragActive] = useState(false);
+    const [isParsing, setIsParsing] = useState(false);
+    const [isParsed, setIsParsed] = useState(false);
 
     const clearFile = () => {
         setFile(null);
         setStats([]);
         setError(null);
+        setIsParsing(false);
+        setIsParsed(false);
     };
 
     const handleFileSelected = (selectedFile: File | null) => {
         clearFile();
+
         if (!selectedFile) return;
 
         if (!selectedFile.name.endsWith(".csv")) {
-            setError("Неверный формат файла. Нужно .csv");
+            setError("упс, не то...");
             return;
         }
 
@@ -45,6 +49,8 @@ export function useFileUploader() {
         if (!file) return;
 
         setLoading(true);
+        setIsParsing(true);
+        setIsParsed(false);
         setError(null);
         setStats([]);
 
@@ -57,17 +63,22 @@ export function useFileUploader() {
                 body: formData,
             });
 
-            if (!response.ok || !response.body)
+            if (!response.ok || !response.body) {
                 throw new Error("Ошибка при получении данных от сервера");
+            }
 
             const reader = response.body
                 .pipeThrough(new TextDecoderStream())
                 .getReader();
 
-            const { parsedStats, hadParsingError } = await parseStatsStream(
-                reader
+            const parsedStats: any[] = [];
+            const { hadParsingError } = await parseStatsStream(
+                reader,
+                (parsed) => {
+                    parsedStats.push(parsed);
+                    setStats([...parsedStats]);
+                }
             );
-            setStats([...parsedStats]);
 
             if (parsedStats.length > 0) {
                 const latestValid = [...parsedStats]
@@ -84,10 +95,17 @@ export function useFileUploader() {
                 };
 
                 addToHistory(entry);
-                if (!latestValid)
-                    setError("Файл повреждён или содержит неверные данные.");
+
+                if (!latestValid) {
+                    setError("упс, не то...");
+                    setIsParsed(false);
+                } else {
+                    setIsParsed(true);
+                }
             } else {
-                setError("Не удалось прочитать данные из файла.");
+                setError("упс, не то...");
+                setIsParsed(false);
+
                 addToHistory({
                     id: Date.now().toString(),
                     createdAt: new Date().toISOString(),
@@ -108,8 +126,10 @@ export function useFileUploader() {
             }
         } catch (err: unknown) {
             setError(err instanceof Error ? err.message : "Неизвестная ошибка");
+            setIsParsed(false);
         } finally {
             setLoading(false);
+            setIsParsing(false);
         }
     };
 
@@ -145,5 +165,7 @@ export function useFileUploader() {
         handleDragLeave,
         handleDrop,
         clearFile,
+        isParsing,
+        isParsed,
     };
 }

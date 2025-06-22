@@ -1,0 +1,33 @@
+.button {
+    border-radius: 7px;
+    cursor: pointer;
+    border: none;
+    padding: 7px 20px;
+    font-size: 20px;
+}
+
+.active {
+    background-color: #FFFFFF;
+}
+
+.process {
+    background-color: #CB81FF;
+    cursor: default;
+}
+
+.parsing {
+    background-color: #CB81FF;
+    min-width: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.done {
+    background-color: #D4FAE6;
+}
+
+.error {
+    background-color: #FF5F00;
+    color: #FFF;
+}

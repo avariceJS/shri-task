@@ -1,0 +1,52 @@
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 30px 50px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.logo {
+    display: flex;
+    align-items: start;
+}
+
+.title {
+    text-transform: uppercase;
+    background-color: #CB81FF;
+    padding: 3px 6px;
+    font-weight: 700;
+    font-size: 30px;
+}
+
+.nav {
+    display: flex;
+    gap: 30px;
+}
+
+.link {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    text-decoration: none;
+    color: #201B10;
+    font-weight: 400;
+    padding-bottom: 5px;
+    transition: border-color 0.2s ease, color 0.2s ease;
+    border-bottom: 2px solid transparent;
+}
+
+.active {
+    border-bottom: 2px solid #201B10;
+}
+
+span{
+    color: #201B10;
+    font-weight: 400;
+    font-size: 30px;
+}

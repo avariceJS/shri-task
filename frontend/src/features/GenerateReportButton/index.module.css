@@ -1,0 +1,8 @@
+p {
+    font-size: 23px;
+}
+
+.container {
+    display: grid;
+    justify-items: center;
+}

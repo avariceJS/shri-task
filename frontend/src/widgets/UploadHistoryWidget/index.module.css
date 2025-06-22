@@ -1,0 +1,12 @@
+.buttonsWrapper {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 20px;
+}
+
+.historyText{
+    display: flex;
+    justify-content: center;
+    font-size: 26px;
+}

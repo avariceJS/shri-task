@@ -1,26 +1,15 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
-
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import HistoryPage from "./pages/HistoryPage";
 import GeneratePage from "./pages/GeneratePage";
 import HomePage from "./pages/HomePage";
-
+import Header from "./shared/components/Header";
+import './main.css'
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
         <BrowserRouter>
-            <header
-                style={{
-                    display: "flex",
-                    gap: 10,
-                    padding: 10,
-                    borderBottom: "1px solid #ccc",
-                }}
-            >
-                <Link to="/">CSV Аналитик</Link>
-                <Link to="/generate">CSV Генератор</Link>
-                <Link to="/history">История</Link>
-            </header>
+            <Header />
             <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/generate" element={<GeneratePage />} />

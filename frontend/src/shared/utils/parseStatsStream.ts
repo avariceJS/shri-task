@@ -1,4 +1,7 @@
-export async function parseStatsStream(reader: ReadableStreamDefaultReader) {
+export async function parseStatsStream(
+    reader: ReadableStreamDefaultReader<string>,
+    onStatParsed?: (stat: any) => void
+): Promise<{ parsedStats: any[]; hadParsingError: boolean }> {
     let resultText = "";
     const parsedStats: any[] = [];
     let hadParsingError = false;
@@ -16,7 +19,9 @@ export async function parseStatsStream(reader: ReadableStreamDefaultReader) {
 
             for (const line of lines) {
                 try {
-                    parsedStats.push(JSON.parse(line));
+                    const parsed = JSON.parse(line);
+                    parsedStats.push(parsed);
+                    onStatParsed?.(parsed);
                 } catch {
                     hadParsingError = true;
                 }

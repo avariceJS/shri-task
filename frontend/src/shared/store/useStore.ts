@@ -1,9 +1,6 @@
 import { create } from "zustand";
 import type { StatsEntry, UploadHistoryEntry } from "../type/types";
 
-
-
-
 type State = {
     file: File | null;
     loading: boolean;

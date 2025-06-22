@@ -1,0 +1,30 @@
+.button {
+    border-radius: 13px;
+    cursor: pointer;
+    border: none;
+    padding: 12px 25px;
+    font-size: 20px;
+}
+
+.active {
+    background-color: #2AE881;
+    color: #201B10;
+
+}
+
+.unactive {
+    background-color: #C0C0C0;
+    color: #787878;
+
+}
+
+.download {
+    background-color: #FCE300;
+    color: #201B10;
+
+}
+
+.clear {
+    background-color: #201B10;
+    color: #FFF;
+}
