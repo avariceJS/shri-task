@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { formatDayOfYear } from '../../shared/utils/validateStats';
+
 import type { EntryType } from '../../shared/type/types';
 import styles from './styles/index.module.css';
 import { StatItem } from './ui/StatItem';
 import { CloseButton } from './ui/CloseButton';
+import { formatDayOfYear } from '../../shared/utils/formatDayOfYear';
 
 type Props = {
     entry: EntryType;
@@ -19,10 +20,13 @@ export function StatsModal({ entry, onClose }: Props) {
     };
 
     const stats = entry.stats;
-
     return ReactDOM.createPortal(
-        <div className={styles.backdrop} onClick={handleBackdropClick}>
-            <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+        <div className={styles.backdrop} data-testid="modal-backdrop" onClick={handleBackdropClick}>
+            <div
+                className={styles.modal}
+                data-testid="modal-container"
+                onClick={(e) => e.stopPropagation()}
+            >
                 <StatItem
                     label="Общие расходы в галактических кредитах"
                     value={stats.total_spend_galactic}

@@ -27,6 +27,12 @@ export function useFileUploader() {
     const handleFileSelected = (selectedFile: File | null) => {
         clearFile();
         if (!selectedFile) return;
+
+        if (selectedFile.size === 0) {
+            setError('упс, не то...');
+            return;
+        }
+
         if (!isCsvFile(selectedFile)) {
             setError('упс, не то...');
             return;

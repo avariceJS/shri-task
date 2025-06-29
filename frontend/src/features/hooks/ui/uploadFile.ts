@@ -1,9 +1,7 @@
-import type { EntryType, StatsEntry } from "../../../shared/type/types";
-import { parseStatsStream } from "../../../shared/utils/parseStatsStream";
-import { isValidStats } from "../../../shared/utils/validateStats";
-import { createHistoryEntry } from "./createHistoryEntry";
-
-;
+import type { EntryType, StatsEntry } from '../../../shared/type/types';
+import { parseStatsStream } from '../../../shared/utils/parseStatsStream';
+import { isValidStats } from '../../../shared/utils/isValidStats';
+import { createHistoryEntry } from './createHistoryEntry';
 
 export async function uploadFile(
     url: string,

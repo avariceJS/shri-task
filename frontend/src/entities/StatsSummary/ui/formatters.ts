@@ -1,4 +1,5 @@
-import { formatDayOfYear } from '../../../shared/utils/validateStats';
+;
+import { formatDayOfYear } from '../../../shared/utils/formatDayOfYear';
 import type { Stats } from '../types';
 
 export function formatStatValue(key: keyof Stats, value: Stats[keyof Stats]) {
